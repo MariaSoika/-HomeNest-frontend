@@ -1,0 +1,49 @@
+.wrapper {
+    /*background-image: url('https://archipro.com.au/images/cdn-images/width%3D3840%2Cquality%3D80/images/s1/article/building/Form-Apartments-Port-Coogee-by-Stiebel-Eltron--v2.jpg/eyJlZGl0cyI6W3sidHlwZSI6InpwY2YiLCJvcHRpb25zIjp7ImJveFdpZHRoIjoyODgwLCJib3hIZWlnaHQiOjE4NTYsImNvdmVyIjp0cnVlLCJ6b29tV2lkdGgiOjI4ODAsInNjcm9sbFBvc1giOjUwLCJzY3JvbGxQb3NZIjo1MCwiYmFja2dyb3VuZCI6InJnYigxMTUsMTQwLDE5NCkiLCJmaWx0ZXIiOjB9fSx7InR5cGUiOiJmbGF0dGVuIiwib3B0aW9ucyI6eyJiYWNrZ3JvdW5kIjoiI2ZmZmZmZiJ9fV0sInF1YWxpdHkiOjg3LCJ0b0Zvcm1hdCI6ImpwZyJ9');*/
+    background-image: url("https://royaapartments.com/wp-content/uploads/sites/10/2023/04/hm_hero1.png");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: white;
+    position: relative;
+}
+
+.wrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.heroContent {
+    text-align: left;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    z-index: 1;
+}
+
+.transparentAppBar {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    z-index: 1;
+}
+
+.btn{
+    background-color: red;
+    color: darkred;
+    box-shadow: none;
+}
+
+.box{
+    background-color: whitesmoke;
+    padding: 20px;
+    border-radius: 10px;
+}
