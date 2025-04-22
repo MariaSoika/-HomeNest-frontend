@@ -1,187 +1,150 @@
 import React from "react";
-import {Box, Card as MuiCard, CardActionArea, CardContent, CardMedia, Chip, Grid, IconButton, Typography} from "@mui/material";
+import {
+    Box,
+    Card as MuiCard,
+    CardActionArea,
+    CardContent,
+    CardMedia,
+    Chip,
+    IconButton,
+    Typography,
+    CircularProgress
+} from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import CheckIcon from "@mui/icons-material/Check";
-import CircularProgress from "@mui/material/CircularProgress";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "../Thene/Theme.ts";
 
+import { Property } from "../MockData/Apartments.ts"; // ІМПОРТУЄМО ТИП
 
-interface Property {
-    residentialComplexName: string;
-    id: number;
-    photo: string;
-    title: string;
-    price: number;
-    area: number;
-    rooms: number;
-    floor: number;
-    address: string;
-    status: string;
-    type: "Продаж" | "Оренда";
-    category: string;
-    verification: "Верифіковано" | "Очікує";
+interface CardProps {
+    data: Property;
 }
 
-const apartment: Property[] = [
-    {
-        residentialComplexName: "Новий",
-        id: 1,
-        photo: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=60",
-        title: "3к квартира вул. Осиповського 9",
-        price: 3946168,
-        area: 34,
-        rooms: 2,
-        floor: 4,
-        address: "вул. Олександра Олеся 5А",
-        status: "Доступна",
-        type: "Продаж",
-        category: "Квартира",
-        verification: "Верифіковано"
-    },
-    {
-        residentialComplexName: "Новий",
-        id: 2,
-        photo: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=60",
-        title: "3к квартира вул. Осиповського 9",
-        price: 3946168,
-        area: 34,
-        rooms: 2,
-        floor: 4,
-        address: "вул. Олександра Олеся 5А",
-        status: "Доступна",
-        type: "Оренда",
-        category: "Квартира",
-        verification: "Очікує"
-    }
-];
-
-
-const Card: React.FC = () => {
+const Card: React.FC<CardProps> = ({ data }) => {
     return (
-        <Grid container spacing={3}>
-            {apartment.map((apartment) => (
-                <Grid item xs={12} sm={6} md={3} key={apartment.id}>
-                    <MuiCard
+        <ThemeProvider theme={theme}>
+            <MuiCard
+                sx={{
+                    borderRadius: 3,
+                    boxShadow: 2,
+                    position: "relative",
+                    overflow: "hidden",
+                    height: "100%",
+                    display: "flex",
+                    width: 275,
+                    flexDirection: "column",
+                }}
+            >
+                <CardActionArea component="div" sx={{ position: "relative" }}>
+                    <CardMedia
+                        component="img"
+                        image={data.photo}
+                        alt={data.title}
                         sx={{
-                            borderRadius: 3,
-                            boxShadow: 2,
-                            position: "relative",
-                            overflow: "hidden",
-                            height: "100%",
-                            display: "flex",
-                            flexDirection: "column",
+                            height: 200,
+                            objectFit: "cover",
+                            width: "100%",
+                        }}
+                    />
+
+                    <Chip
+                        label={data.type}
+                        color={data.type === "Продаж" ? "sale" : "rent"}
+                        sx={{
+                            position: "absolute",
+                            top: 16,
+                            left: 16,
+                            fontWeight: "bold",
+                        }}
+                    />
+
+                    <Chip
+                        icon={
+                            data.verification === "Верифіковано" ? (
+                                <CheckIcon sx={{ padding: "10px" }} />
+                            ) : (
+                                <CircularProgress
+                                    variant="determinate"
+                                    value={80}
+                                    size={20}
+                                    color="inherit"
+                                />
+                            )
+                        }
+                        color={data.verification === "Верифіковано" ? "verified" : "waiting"}
+                        sx={{
+                            position: "absolute",
+                            top: 16,
+                            left: 100,
+                            width: "40px",
+                            padding: 0,
+                            ".MuiChip-icon": {
+                                margin: "0px -18px 0px 5px",
+                                width: "100%",
+                                display: "flex",
+                            },
+                        }}
+                    />
+
+                    <IconButton
+                        sx={{
+                            position: "absolute",
+                            top: 16,
+                            right: 16,
+                            backgroundColor: "rgba(255,255,255,0.8)",
                         }}
                     >
-                        <CardActionArea component="div" sx={{ position: "relative" }}>
-                            <CardMedia
-                                component="img"
-                                height="200"
-                                image={apartment.photo}
-                                alt={apartment.title}
-                            />
+                        <FavoriteBorderIcon />
+                    </IconButton>
+                </CardActionArea>
 
-                            <Chip
-                                label={apartment.type}
-                                color={apartment.type === "Продаж" ? "error" : "info"}
-                                sx={{
-                                    position: "absolute",
-                                    top: 16,
-                                    left: 16,
-                                    color: "#fff",
-                                    fontWeight: "bold",
-                                }}
-                            />
+                <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography
+                        variant="subtitle1"
+                        fontWeight="bold"
+                        mb={0.5}
+                        sx={{
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                        }}
+                    >
+                        {data.title}
+                    </Typography>
 
-                            <Chip
-                                icon={
-                                    apartment.verification === "Верифіковано" ? (
-                                        <CircularProgress
-                                            variant="determinate"
-                                            value={80}
-                                            size={20}
-                                            color="inherit"
-                                        />
-                                    ) : (
-                                        <CheckIcon
-                                            sx={{ padding: "10px"}}
-                                        />
-                                    )
-                                }
-                                color={apartment.verification === "Верифіковано" ? "info" : "success"}
-                                sx={{
-                                    position: "absolute",
-                                    top: 16,
-                                    left: 100,
-                                    width: "40px",
-                                    padding: 0,
-                                    ".MuiChip-icon": {
-                                        margin: "0px -18px 0px 5px",
-                                        width: "100%",
-                                        display: "flex",
-                                    },
-                                }}
-                            />
+                    <Typography variant="body2" color="text.secondary" mb={1.5}>
+                        {data.address}
+                    </Typography>
 
-                            <IconButton
-                                sx={{
-                                    position: "absolute",
-                                    top: 16,
-                                    right: 16,
-                                    backgroundColor: "rgba(255,255,255,0.8)",
-                                }}
-                            >
-                                <FavoriteBorderIcon />
-                            </IconButton>
-                        </CardActionArea>
+                    <Typography variant="body2" color="text.secondary" mb={1.5}>
+                        <span>ЖК "{data.residentialComplexName}"</span>
+                    </Typography>
 
-                        <CardContent sx={{ flexGrow: 1 }}>
-                            <Typography
-                                variant="subtitle1"
-                                fontWeight="bold"
-                                mb={0.5}
-                                sx={{
-                                    overflow: "hidden",
-                                    textOverflow: "ellipsis",
-                                    whiteSpace: "nowrap",
-                                }}
-                            >
-                                {apartment.title}
-                            </Typography>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexWrap: "wrap",
+                            gap: 1,
+                            mb: 1,
+                            color: "text.secondary",
+                            fontSize: "15px",
+                        }}
+                    >
+                        <Typography component="span">{data.rooms} кім.</Typography>
+                        <span>•</span>
+                        <Typography component="span">{data.area} м²</Typography>
+                        <span>•</span>
+                        <Typography component="span">{data.floor} поверх</Typography>
+                    </Box>
 
-                            <Typography variant="body2" color="text.secondary" mb={1.5}>
-                                {apartment.address}
-                            </Typography>
-
-                            <Typography variant="body2" color="text.secondary" mb={1.5}>
-                                <span>ЖК "{apartment.residentialComplexName}"</span>
-                            </Typography>
-
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    flexWrap: "wrap",
-                                    gap: 1,
-                                    mb: 1,
-                                    color: "text.secondary",
-                                    fontSize: "15px",
-                                }}
-                            >
-                                <Typography component="span">{apartment.rooms} кім.</Typography>
-                                <span>•</span>
-                                <Typography component="span">{apartment.area} м²</Typography>
-                                <span>•</span>
-                                <Typography component="span">{apartment.floor} поверх</Typography>
-                            </Box>
-
-                            <Typography variant="h6" fontWeight="bold" color="text.primary">
-                                {apartment.price.toLocaleString()} грн
-                            </Typography>
-                        </CardContent>
-                    </MuiCard>
-
-                </Grid>
-            ))}
-        </Grid>
-    )
+                    <Typography variant="h6" fontWeight="bold" color="text.primary">
+                        {data.price.toLocaleString()} грн
+                    </Typography>
+                </CardContent>
+            </MuiCard>
+        </ThemeProvider>
+    );
 };
 
 export default Card;

@@ -4,7 +4,8 @@ import {
     Container,
     Typography,
 } from "@mui/material";
-import Card from "../Card/Card.tsx"
+import { apartments } from "../MockData/Apartments.ts";
+import CardCarusel from "../CardPaginations/CardCarusel/CardCarusel.tsx";
 
 const PropertyList: React.FC = () => {
     return (
@@ -33,7 +34,7 @@ const PropertyList: React.FC = () => {
                     </Box>{" "}
                     пропозиції на ринку
                 </Typography>
-                <Card/>
+                <CardCarusel data={apartments} />;
             </Container>
         </Box>
     );
